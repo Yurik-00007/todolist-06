@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent} from 'react';
+import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from './App';
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
@@ -28,9 +28,18 @@ export function Todolist(props: PropsType) {
 
     const removeTodolist = () => props.removeTodolist(props.todolistId)
 
-    const onAllClickHandler = () => props.changeFilter(props.todolistId, "all");
-    const onActiveClickHandler = () => props.changeFilter(props.todolistId, "active");
-    const onCompletedClickHandler = () => props.changeFilter(props.todolistId, "completed");
+    const onAllClickHandler = () => {
+
+        return props.changeFilter(props.todolistId, "all")
+    };
+    const onActiveClickHandler = () => {
+
+        return props.changeFilter(props.todolistId, "active")
+    };
+    const onCompletedClickHandler = () => {
+
+        return props.changeFilter(props.todolistId, "completed");
+    }
     const addTask = (newTitleTask: string) => {
         props.addTask(props.todolistId, newTitleTask)
     }
