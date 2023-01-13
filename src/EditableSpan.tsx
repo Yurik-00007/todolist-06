@@ -1,12 +1,12 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, memo, useState} from 'react';
 
 type EditableSpanType={
     oldTitle:string
     callback:(newTitle:string)=>void
 }
 
-const EditableSpan = (props:EditableSpanType) => {
-    //console.log(props.valueTitle)
+const EditableSpan = memo((props:EditableSpanType) => {
+    console.log('EditableSpan is called')
 //debugger
     let [editMode,setEditMode]=useState<boolean>(false)
     let [title,setTitle]=useState<string>(props.oldTitle)
@@ -37,6 +37,6 @@ const EditableSpan = (props:EditableSpanType) => {
 
         </>
     );
-};
+});
 
 export default EditableSpan;

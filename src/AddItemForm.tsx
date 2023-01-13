@@ -1,10 +1,12 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 
 export type AddItemFormType = {
     addItem: (newTitle: string) => void
 }
 
-const AddItemForm = (props: AddItemFormType) => {
+const AddItemForm = memo((props: AddItemFormType) => {
+    console.log('AddItemForm is called')
+
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -23,7 +25,8 @@ const AddItemForm = (props: AddItemFormType) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if(error!==null){
+        setError(null);}
         if (e.charCode === 13) {
             addItem();
         }
@@ -41,6 +44,6 @@ const AddItemForm = (props: AddItemFormType) => {
             {error && <div className="error-message">{error}</div>}
         </div>
     );
-};
+});
 
 export default AddItemForm;

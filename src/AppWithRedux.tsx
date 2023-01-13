@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {memo, useCallback, useReducer} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
@@ -27,7 +27,9 @@ export type TasksStateType = {
 }
 
 
-function AppWithRedux() {
+const AppWithRedux=memo(function () {
+
+    console.log('App is called')
 
     const todolists=useSelector<AppRootType,Array<TodolistType>>(state=>state.todolists)
     //const tasks=useSelector<AppRootType,TasksStateType>(state=>state.tasks)
@@ -53,46 +55,46 @@ function AppWithRedux() {
     });
 */
 
-    function removeTask(todolistId: string, taskId: string) {
+/*    function removeTask(todolistId: string, taskId: string) {
         dispatch(removeTaskAC(todolistId,taskId))
         //setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id != taskId)});
-    }
+    }*/
 
-    function addTask(todolistId: string, title: string) {
+ /*   function addTask(todolistId: string, title: string) {
         dispatch(addTaskAC(todolistId,title))
         //setTasks({...tasks, [todolistId]: [{id: v1(), title: title, isDone: false}, ...tasks[todolistId]]});
-    }
+    }*/
 
-    function changeStatus(todolistId: string, taskId: string, isDone: boolean) {
+/*    function changeStatus(todolistId: string, taskId: string, isDone: boolean) {
         dispatch(changeStatusAC(todolistId,taskId,isDone))
         //setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)});
-    }
+    }*/
 
-    function changeTaskTitle(todolistId: string, taskId: string, newTitle: string) {
+/*    function changeTaskTitle(todolistId: string, taskId: string, newTitle: string) {
         dispatch(changeTaskTitleAC(todolistId,taskId,newTitle))
         // setTasks({
         //     ...tasks,
         //     [todolistId]: tasks[todolistId].map(el => el.id === taskId ? {...el, title: newTitle} : el)
         // })
-    }
+    }*/
 
 
-    function removeTodolist(todolistId: string) {
+/*    function removeTodolist(todolistId: string) {
 //const action=removeTodolistAC(todolistId)
         dispatch(removeTodolistAC(todolistId))
 
-/*
+/!*
         // засунем в стейт список тудулистов, id которых не равны тому, который нужно выкинуть
         setTodolists(todolists.filter(tl => tl.id != todolistId));
         // удалим таски для этого тудулиста из второго стейта, где мы храним отдельно таски
         delete tasks[todolistId]; // удаляем св-во из объекта... значением которого являлся массив тасок
         // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
         setTasks({...tasks});
-*/
+*!/
 
-    }
+    }*/
 
-    function addTodolist(newTitleTodolist: string) {
+    const addTodolist=useCallback((newTitleTodolist: string)=> {
         //const action=addTodolistAC(newTitleTodolist)
         dispatch(addTodolistAC(newTitleTodolist))
 
@@ -106,19 +108,19 @@ function AppWithRedux() {
         //         {id: v1(), title: "Redux", isDone: false},
         //     ]
         // })
-    }
+    },[dispatch])
 
-    function changeFilter(todolistId: string, value: FilterValuesType) {
+/*    function changeFilter(todolistId: string, value: FilterValuesType) {
 
         dispatch(changeFilterAC(todolistId,value))
         //setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, filter: value} : tl))
-    }
+    }*/
 
 
-    function changeTodolistTitle(todolistId: string, newTitle: string) {
+/*    function changeTodolistTitle(todolistId: string, newTitle: string) {
         dispatch(changeTodolistTitleAC(todolistId,newTitle))
         //setTodolists(todolists.map(el => el.id === todolistId ? {...el, title: newTitle} : el))
-    }
+    }*/
 
     return (
         <div className="App">
@@ -128,6 +130,7 @@ function AppWithRedux() {
 
                     return (
                         <TodolistWithRedux
+                            key={tl.id}
                             todolist={tl}
                         />
                     )
@@ -136,6 +139,6 @@ function AppWithRedux() {
 
         </div>
     );
-}
+})
 
 export default AppWithRedux;
