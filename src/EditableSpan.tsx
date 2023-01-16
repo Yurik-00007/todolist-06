@@ -5,25 +5,26 @@ type EditableSpanType={
     callback:(newTitle:string)=>void
 }
 
-const EditableSpan = memo((props:EditableSpanType) => {
-    console.log('EditableSpan is called')
+export const EditableSpan = memo((props:EditableSpanType) => {
+    //console.log('EditableSpan is called')
 //debugger
     let [editMode,setEditMode]=useState<boolean>(false)
     let [title,setTitle]=useState<string>(props.oldTitle)
 
     const activateEditMode=()=>{
-        setEditMode(!editMode)
-        changeTitleItem()
+        setEditMode(true)
+        setTitle(props.oldTitle)
     }
+    const activateViewMode = () => {
+        setEditMode(false);
+        props.callback(title)
+
+    }
+
     const onChangeTitle=(e:ChangeEvent<HTMLInputElement>)=>{
         setTitle(e.currentTarget.value)
     }
-    const changeTitleItem=()=>{
-        let newTitle=title.trim();
-        if(newTitle!==''){
-            props.callback(newTitle)
-        }
-    }
+
 
     return (
         <>{editMode
@@ -31,7 +32,7 @@ const EditableSpan = memo((props:EditableSpanType) => {
                 onChange={onChangeTitle}
                 value={title}
                     autoFocus
-                    onBlur={activateEditMode}/>
+                    onBlur={activateViewMode}/>
             : <span onDoubleClick={activateEditMode}>{title}</span>
         }
 
